@@ -15,20 +15,20 @@ clr='\[\033[00m\]'      # Reset
 set -o vi
 
 # run below upon opening terminal
-clear
+#clear
 
-printf "\n"
-printf "   %s\n" "${grn}IP ADDR:${clr} $(curl ifconfig.me)"
-printf "   %s\n" "${grn}USER:${clr} $(echo $USER)"
-printf "   %s\n" "${ylw}DATE:${clr} $(date)"
-printf "   %s\n" "${cyn}UPTIME:${clr} $(uptime -p)"
-printf "   %s\n" "${grn}HOSTNAME:${clr} $(hostname -f)"
-printf "   %s\n" "${cyn}CPU:${clr} $(awk -F: '/model name/{print $2}' | head -1)"
-printf "   %s\n" "${ylw}KERNEL:${clr} $(uname -rms)"
-printf "   %s\n" "${ylw}PACKAGES:${clr} $(dpkg --get-selections | wc -l)"
-printf "   %s\n" "${ylw}RESOLUTION:${clr} $(xrandr | awk '/\*/{printf $1" "}')"
-printf "   %s\n" "${cyn}MEMORY:${clr} $(free -m -h | awk '/Mem/{print $3"/"$2}')"
-printf "\n"
+#printf "\n"
+#printf "   %s\n" "${grn}IP ADDR:${clr} $(curl ifconfig.me)"
+#printf "   %s\n" "${grn}USER:${clr} $(echo $USER)"
+#printf "   %s\n" "${ylw}DATE:${clr} $(date)"
+#printf "   %s\n" "${cyn}UPTIME:${clr} $(uptime -p)"
+#printf "   %s\n" "${grn}HOSTNAME:${clr} $(hostname -f)"
+#printf "   %s\n" "${cyn}CPU:${clr} $(awk -F: '/model name/{print $2}' | head -1)"
+#printf "   %s\n" "${ylw}KERNEL:${clr} $(uname -rms)"
+#printf "   %s\n" "${ylw}PACKAGES:${clr} $(dpkg --get-selections | wc -l)"
+#printf "   %s\n" "${ylw}RESOLUTION:${clr} $(xrandr | awk '/\*/{printf $1" "}')"
+#printf "   %s\n" "${cyn}MEMORY:${clr} $(free -m -h | awk '/Mem/{print $3"/"$2}')"
+#printf "\n"
 
 # If not running interactively, don't do anything
 case $- in
@@ -84,7 +84,7 @@ parse_git_branch() {
 # if we want colour, color_prompt will be 'yes'        red='\[\033[01;31m\]'
 function bash_prompt(){
     if [ "$color_prompt" = yes ]; then
-         PS1="${grn}\u@\h${clr}: ${blu}\w${pur} $(parse_git_branch) ${blu}${clr}"
+         PS1="[${grn}\u@\h${clr}: ${blu}\w${pur}]$(parse_git_branch) ${blu}$ ${clr}"
     else
          PS1="\u@\h: \w$(parse_git_branch) $ "
     fi
