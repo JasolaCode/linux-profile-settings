@@ -10,3 +10,16 @@ git reset --hard
 # cleaning up any local changes / untracked files that would have been overwritten, the pull will finally work
 git pull
 ```
+
+# git-prompt cheat sheet
+
+```bash
+(*)   # unstaged changes
+(+)   # staged changes
+($)   # stashed changes
+(%)   # untracked files
+(<)   # indicates you are behind HEAD
+(>)   # indicates you are ahead of HEAD
+(<>)  # indicates you have diverged
+(=)   # indicates there is no difference
+```
