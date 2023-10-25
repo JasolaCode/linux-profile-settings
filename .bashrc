@@ -18,16 +18,16 @@ set -o vi
 clear
 
 printf "\n"
-printf "   %s\n" "${grn}IP ADDR: ${clr} $(curl ifconfig.me)"
-printf "   %s\n" "${grn}USER: ${clr} $(echo $USER)"
-printf "   %s\n" "${ylw}DATE: ${clr} $(date)"
-printf "   %s\n" "${cyn}UPTIME: ${clr} $(uptime -p)"
-printf "   %s\n" "${grn}HOSTNAME: ${clr} $(hostname -f)"
-printf "   %s\n" "${cyn}CPU: ${clr} $(awk -F: '/model name/{print $2}' | head -1)"
-printf "   %s\n" "${ylw}KERNEL: ${clr} $(uname -rms)"
-printf "   %s\n" "${ylw}PACKAGES: ${clr} $(dpkg --get-selections | wc -l)"
-printf "   %s\n" "${ylw}RESOLUTION: ${clr} $(xrandr | awk '/\*/{printf $1" "}')"
-printf "   %s\n" "${cyn}MEMORY: ${clr} $(free -m -h | awk '/Mem/{print $3"/"$2}')"
+printf "   %s\n" "${grn}IP ADDR:${clr} $(curl ifconfig.me)"
+printf "   %s\n" "${grn}USER:${clr} $(echo $USER)"
+printf "   %s\n" "${ylw}DATE:${clr} $(date)"
+printf "   %s\n" "${cyn}UPTIME:${clr} $(uptime -p)"
+printf "   %s\n" "${grn}HOSTNAME:${clr} $(hostname -f)"
+printf "   %s\n" "${cyn}CPU:${clr} $(awk -F: '/model name/{print $2}' | head -1)"
+printf "   %s\n" "${ylw}KERNEL:${clr} $(uname -rms)"
+printf "   %s\n" "${ylw}PACKAGES:${clr} $(dpkg --get-selections | wc -l)"
+printf "   %s\n" "${ylw}RESOLUTION:${clr} $(xrandr | awk '/\*/{printf $1" "}')"
+printf "   %s\n" "${cyn}MEMORY:${clr} $(free -m -h | awk '/Mem/{print $3"/"$2}')"
 printf "\n"
 
 # If not running interactively, don't do anything
@@ -83,9 +83,9 @@ parse_git_branch() {
 
 # if we want colour, color_prompt will be 'yes'        red='\[\033[01;31m\]'
 if [ "$color_prompt" = yes ]; then
-     PS1="${grn}\u@\h${clr}: ${blu}\w ${pur}\$(parse_git_branch) ${clr}"
+     PS1="${grn}\u@\h${clr}: ${blu}\w${pur} $(parse_git_branch) ${blu}${clr}"
 else
-     PS1="\u@\h: \w $(parse_git_branch) $ "
+     PS1="\u@\h: \w$(parse_git_branch) $ "
 fi
 unset color_prompt force_color_prompt
 
@@ -101,9 +101,7 @@ unset color_prompt force_color_prompt
     alias egrep='egrep --color=auto'
 fi
 
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=0    1:quote=01'
-
+# optional to add .bash_aliases from repo
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -120,19 +118,5 @@ if ! shopt -oq posix; then
 fi
 
 export PATH=$PATH:$GOPATH/bin
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-# run the below command to get an idea of alias' to create in future.
-# shows a list of the top 10 commands you run most
-# history | awk '{cmd[$2]++} END {for(elem in cmd) {print cmd[elem] " " elem}}' | sort -n -r | head -10
-
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
 
 
