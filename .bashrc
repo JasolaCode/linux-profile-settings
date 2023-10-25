@@ -78,15 +78,17 @@ fi
 
 # forming bash prompt, will show on success of command. stderr out to /dev/null.
 parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+    if[ -d .git ];then
+        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+    fi
 }
 
 # if we want colour, color_prompt will be 'yes'        red='\[\033[01;31m\]'
-function bash_prompt(){
+bash_prompt(){
     if [ "$color_prompt" = yes ]; then
          PS1="[${grn}\u@\h${clr}: ${blu}\w${clr}]${pur}$(parse_git_branch) ${blu}$ ${clr}"
     else
-         PS1="\u@\h: \w$(parse_git_branch) $ "
+         PS1="[\u@\h: \w]$(parse_git_branch) $ "
     fi
 }
 # need this here so it can run after terminal info
