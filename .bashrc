@@ -1,6 +1,34 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+
+# set colour variables to use in the file
+blk='\[\033[01;30m\]'   # Black
+red='\[\033[01;31m\]'   # Red
+grn='\[\033[01;32m\]'   # Green
+ylw='\[\033[01;33m\]'   # Yellow
+blu='\[\033[01;34m\]'   # Blue
+pur='\[\033[01;35m\]'   # Purple
+cyn='\[\033[01;36m\]'   # Cyan
+wht='\[\033[01;37m\]'   # White
+clr='\[\033[00m\]'      # Reset
+
+# allows the terminal to operate as a vim editor for editing commands
+set -o vi
+
+# run below upon opening terminal
+clear
+
+printf "\n"
+printf "   %s\n" "${grn}IP ADDR: ${clr} $(curl ifconfig.me)"
+printf "   %s\n" "${grn}USER: ${clr} $(echo $USER)"
+printf "   %s\n" "${ylw}DATE: ${clr} $(date)"
+printf "   %s\n" "${cyn}UPTIME: ${clr} $(uptime -p)"
+printf "   %s\n" "${grn}HOSTNAME: ${clr} $(hostname -f)"
+printf "   %s\n" "${cyn}CPU: ${clr} $(awk -F: '/model name/{print $2}' | head -1)"
+printf "   %s\n" "${ylw}KERNEL: ${clr} $(uname -rms)"
+printf "   %s\n" "${ylw}PACKAGES: ${clr} $(dpkg --get-selections | wc -l)"
+printf "   %s\n" "${ylw}RESOLUTION: ${clr} $(xrandr | awk '/\*/{printf $1" "}')"
+printf "   %s\n" "${cyn}MEMORY: ${clr} $(free -m -h | awk '/Mem/{print $3"/"$2}')"
+printf "\n"
 
 # If not running interactively, don't do anything
 case $- in
@@ -16,7 +44,7 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
+HISTSIZE=2000
 HISTFILESIZE=2000
 HISTTIMEFORMAT="%F %T "
 
@@ -115,6 +143,9 @@ fi
 
 export PATH=$PATH:$GOPATH/bin
 
+# run the below command to get an idea of alias' to create in future.
+# shows a list of the top 10 commands you run most
+# history | awk '{cmd[$2]++} END {for(elem in cmd) {print cmd[elem] " " elem}}' | sort -n -r | head -10
 
 parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
