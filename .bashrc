@@ -121,4 +121,3 @@ fi
 
 export PATH=$PATH:$GOPATH/bin
 
-
