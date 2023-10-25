@@ -84,13 +84,15 @@ parse_git_branch() {
 # if we want colour, color_prompt will be 'yes'        red='\[\033[01;31m\]'
 bash_prompt(){
     if [ "$color_prompt" = yes ]; then
-         PS1="[${grn}\u@\h${clr}: ${blu}\w${clr}]${pur}$(parse_git_branch) ${blu}$ ${clr}"
+        PS1='[\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\]]\[\033[01;35m\]$(__git_ps1 " (%s)") \[\033[01;34m\]$ \[\033[00m\]'
+	   # PS1="[${grn}\u@\h${clr}: ${blu}\w${clr}]${pur}$(parse_git_branch) ${blu}$ ${clr}"
     else
-         PS1="[\u@\h: \w]$(parse_git_branch) $ "
+	PS1='[\u@\h: \w]$(__git_ps1 " (%s)") $ '
+#	PS1="[\u@\h: \w]$(parse_git_branch) $ "
     fi
 }
-# need this here so it can run after terminal info
-bash_prompt
+# need this here so it can pull __git_ps1 info
+source ~/.git_prompt.sh
 
  # enable color support of ls and also add handy aliases
  if [ -x /usr/bin/dircolors ]; then
