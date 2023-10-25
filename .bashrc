@@ -87,6 +87,9 @@ unset color_prompt force_color_prompt
 
 # need this here so it can pull __git_ps1 info
 source ~/.git-prompt.sh
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWUPSTREAM="auto"
 
  # enable color support of ls and also add handy aliases
  if [ -x /usr/bin/dircolors ]; then
