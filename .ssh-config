@@ -1,0 +1,6 @@
+# this file should be altered and saved as file ~/.ssh/config
+# additionally removing these lines
+Host github.com
+	User git
+	AddKeysToAgent yes
+	IdentityFile ~/.ssh/<filename>
