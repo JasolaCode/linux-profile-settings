@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HMDIR=$(echo ~)
-FOLDER=".vimbash$(date +%s)"
+FOLDER=".profile-backup-$(date +%s)"
 
 mkdir "${HMDIR}/${FOLDER}"
 echo "About to move files into ${HMDIR}..."
