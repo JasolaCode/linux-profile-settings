@@ -21,4 +21,4 @@ else
     start_agent;
 fi
 
-source ~/.bashrc 2> /dev/null
+source ~/.bashrc
