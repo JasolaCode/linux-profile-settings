@@ -16,8 +16,9 @@ if [ "$COPY_SSH" = "y" ] || [ "$COPY_SSH" = "yes" ]; then
 	
 	cp .ssh-config ${HMDIR}/.ssh/config && sed -i '/#/d' ${HMDIR}/.ssh/config \
 	&& echo "- Copied to ~/.ssh/config" \
-	&& sed -i "s/<filename>/$KEY_NAME/g" ${HMDIR}/.ssh/config && echo "- Replaced <filename> in ~/.ssh/config"
+	&& sed -i "s/<filename>/$KEY_NAME/g" ${HMDIR}/.ssh/config && echo "- Replaced <filename> string in ~/.ssh/config"
 else
 	echo "- ~/.ssh/config was not set"
 fi
 
+source ${HMDIR}/.bashrc
