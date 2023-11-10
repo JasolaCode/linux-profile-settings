@@ -1,24 +1,69 @@
 #!/bin/bash
+#
+#install.sh
 
-HMDIR=$(echo ~)
-FOLDER=".profile-backup-$(date +%s)"
+function usage { # example of a --help parameter which is parsed through to display information
+	echo "" # $0 is a default variable used for the filename of script
+	echo "Usage: $0 [-u|--user] [-s|--system]" # an understandable layout to display paramaters for script
+	echo "Setup linux profile in environment. Copies pre-defined repo files to proper locations."
+	echo ""
+	echo "Options:" # thi area shows how to parse parameters into the script as intended with brief definitions
+	echo "  -u, --user         Define user that profile will be applied to. Must be an existing user."
+	echo "  -s, --system       Define parameter to exclude uppercase alphabet characters from string."
+	echo "  -h, --help              Display usage information for this script."
+	echo ""
+	exit 0 # exit without error
+}
 
-mkdir "${HMDIR}/${FOLDER}"
-echo "- Moving files into ${HMDIR}"
-echo "- **Expect more output on success**"
+function install {
+	HMDIR=$(echo ~)
+	FOLDER=".profile-backup-$(date +%s)"
 
-# just a simple copy of existing files, files won't be overwritten unless the first copy works
-touch ${HMDIR}/.vimrc ${HMDIR}/.bashrc ${HMDIR}/.bash_profile ${HMDIR}/.bash_aliases ${HMDIR}/.profile ${HMDIR}/.git-prompt.sh && cp ${HMDIR}/.vimrc ${HMDIR}/.bashrc ${HMDIR}/.bash_profile ${HMDIR}/.bash_aliases ${HMDIR}/.profile ${HMDIR}/.git-prompt.sh ${HMDIR}/${FOLDER} && cp .vimrc .bashrc .bash_profile .bash_aliases .profile .git-prompt.sh ${HMDIR} && echo "- Successfully copied files"
+	mkdir "${HMDIR}/${FOLDER}"
+	echo "- Moving files into ${HMDIR}"
+	echo "- **Expect more output on success**"
 
-read -p "Do you wish to copy ~/.ssh/config file? (y/yes/n/no): " COPY_SSH
-if [ "$COPY_SSH" = "y" ] || [ "$COPY_SSH" = "yes" ]; then
-	read -p "Enter the name of the file: " KEY_NAME
+	# just a simple copy of existing files, files won't be overwritten unless the first copy works
+	touch ${HMDIR}/.vimrc ${HMDIR}/.bashrc ${HMDIR}/.bash_profile ${HMDIR}/.bash_aliases ${HMDIR}/.profile ${HMDIR}/.git-prompt.sh && cp ${HMDIR}/.vimrc ${HMDIR}/.bashrc ${HMDIR}/.bash_profile ${HMDIR}/.bash_aliases ${HMDIR}/.profile ${HMDIR}/.git-prompt.sh ${HMDIR}/${FOLDER} && cp .vimrc .bashrc .bash_profile .bash_aliases .profile .git-prompt.sh ${HMDIR} && echo "- Successfully copied files"
+
+	read -p "Do you wish to copy ~/.ssh/config file? (y/yes/n/no): " COPY_SSH
+	if [ "$COPY_SSH" = "y" ] || [ "$COPY_SSH" = "yes" ]; then
+		read -p "Enter the name of the file: " KEY_NAME
 	
-	cp .ssh-config ${HMDIR}/.ssh/config && sed -i '/#/d' ${HMDIR}/.ssh/config \
-	&& echo "- Copied to ~/.ssh/config" \
-	&& sed -i "s/<filename>/$KEY_NAME/g" ${HMDIR}/.ssh/config && echo "- Replaced <filename> string in ~/.ssh/config"
-else
-	echo "- ~/.ssh/config was not set"
-fi
+		cp .ssh-config ${HMDIR}/.ssh/config && sed -i '/#/d' ${HMDIR}/.ssh/config \
+		&& echo "- Copied to ~/.ssh/config" \
+		&& sed -i "s/<filename>/$KEY_NAME/g" ${HMDIR}/.ssh/config && echo "- Replaced <filename> string in ~/.ssh/config"
+	else
+		echo "- ~/.ssh/config was not set"
+	fi
 
-source ${HMDIR}/.bashrc
+	source ${HMDIR}/.bashrc
+}
+
+if [ $# -eq 0 ]; then # if no params are parsed through, display the -h|--help menu using the usage() function
+	echo "$0: no parameter parsed"
+  	usage; exit 0 # exit without error
+fi # end of $# if
+
+while [[ $# -gt 0 ]]; do # while loop is used to assign paramaters parsed through in command line
+	case $1 in # $1 represents a parsed in variable
+		-u|--user) # for parameters which accept a value, we use two 'shift'/s
+			INUSER="$2" # assigns the value parsed with -u to variable
+			shift
+			shift;;
+		-s|--system)
+			INSYS=true # sets variable INSYS to true
+			shift
+			shift
+			;;	
+		-h|--help) # for parameters that don't require a value, only one 'shift' is required
+			usage # calls function usage() to be run
+			shift
+			;;
+		*) # I clearly don't know how to use it... Help me out by showing the usage() function
+			echo "$0: incorrect parameter parsed"
+		  	usage # calls function usage() to be run
+			shift
+			;;
+	esac # end of $1 case
+done # end of $# while
